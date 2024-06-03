@@ -1,4 +1,3 @@
-from src.maths.vector import Vec3
 from OpenGL.GL import *
 
 from src.geometry.geometry import Geometry
@@ -9,14 +8,14 @@ class Cube(Geometry):
         self.position = position
         self.size = size
         self.vertices = [
-            Vec3(position.x, position.y, position.z),
-            Vec3(position.x + size.x, position.y, position.z),
-            Vec3(position.x + size.x, position.y + size.y, position.z),
-            Vec3(position.x, position.y + size.y, position.z),
-            Vec3(position.x, position.y, position.z + size.z),
-            Vec3(position.x + size.x, position.y, position.z + size.z),
-            Vec3(position.x + size.x, position.y + size.y, position.z + size.z),
-            Vec3(position.x, position.y + size.y, position.z + size.z),
+            (position[0], position[1], position[2]),
+            (position[0] + size[0], position[1], position[2]),
+            (position[0] + size[0], position[1] + size[1], position[2]),
+            (position[0], position[1] + size[1], position[2]),
+            (position[0], position[1], position[2] + size[2]),
+            (position[0] + size[0], position[1], position[2] + size[2]),
+            (position[0] + size[0], position[1] + size[1], position[2] + size[2]),
+            (position[0], position[1] + size[1], position[2] + size[2]),
         ]
 
         self.edges = [
@@ -35,24 +34,26 @@ class Cube(Geometry):
         ]
 
         self.normals = [
-            Vec3(0, 0, -1),  # Front face
-            Vec3(0, 0, 1),   # Back face
-            Vec3(0, -1, 0),  # Bottom face
-            Vec3(0, 1, 0),   # Top face
-            Vec3(-1, 0, 0),  # Left face
-            Vec3(1, 0, 0)    # Right face
+            (0, 0, -1),  # Front face
+            (0, 0, 1),   # Back face
+            (0, -1, 0),  # Bottom face
+            (0, 1, 0),   # Top face
+            (-1, 0, 0),  # Left face
+            (1, 0, 0)    # Right face
         ]
 
-    def render(self):
+    def render(self,camera_pos):
         glPushMatrix()
         self.apply_transformations()
         
         glBegin(GL_QUADS)
         for i, surface in enumerate(self.surfaces):
-            normal = self.normals[i].to_tuple()
+            normal = self.normals[i]
             glNormal3fv(normal)
+            if not self.is_face_visible(normal, camera_pos):
+                continue
             for vertex in surface:
-                v = self.vertices[vertex].to_tuple()
+                v = self.vertices[vertex]
                 glVertex3fv(v)
         glEnd()
         

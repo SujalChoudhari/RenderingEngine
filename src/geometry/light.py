@@ -12,7 +12,7 @@ class Light(Geometry):
         self.specular = np.array(specular)
         self.light_id = light_id
 
-    def render(self):
+    def render(self,camera_position):
         glEnable(GL_LIGHTING)
         glEnable(self.light_id)
 

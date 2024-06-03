@@ -4,9 +4,9 @@ from OpenGL.GLU import *
 import numpy as np
 from src.window import Window
 from src.renderer import Renderer
-from src.maths.vector import Vec3
 from src.geometry.line import Line
 from src.geometry.cube import Cube
+from src.geometry.sphere import Sphere
 from src.geometry.light import Light
 from src.free_camera import FreeCamera
 
@@ -16,21 +16,24 @@ def main():
     window = Window(800, 600, "Hello World")
     renderer = Renderer()
 
-    the_cube = Cube(Vec3(-0.5, -0.5, -5), Vec3(1, 1, 1))
+    the_cube = Cube((-0.5, -0.5, -5), (1, 1, 1))
+    the_ball = Sphere((5, 0, -5), 0.5,slices=15,stacks=15)
 
     # Create LightGeometry instead of Light
     the_light = Light(
         position=(-1, 1, 1),
-        ambient=(0.9, 0.9, 0.5),
+        ambient=(0.2, 0.3, 0.5),
         diffuse=(1, 1, 1),
         specular=(0.1, 0.1, 0.1),
     )
 
     camera = FreeCamera([0, 0, 3], [0, 0, -1], [0, 1, 0])
 
-    renderer.add_object(Line(Vec3(-1, -1, -1), Vec3(0, 0, -10)))
+    renderer.add_object(Line((-1, -1, -1), (0, 0, -10)))
     renderer.add_object(the_cube)
-    renderer.add_object(the_light)  # Add the_light as an object to render
+    renderer.add_object(the_light) 
+    renderer.add_object(the_ball)
+    renderer.set_camera(camera)
     pygame.mouse.set_visible(False)
     pygame.event.set_grab(True)
 

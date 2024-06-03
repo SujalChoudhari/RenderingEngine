@@ -66,3 +66,6 @@ class FreeCamera:
             self.pitch = -89.0
 
         self.update_camera_vectors()
+
+    def get_direction(self):
+        return self.front

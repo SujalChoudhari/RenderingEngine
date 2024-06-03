@@ -30,5 +30,9 @@ class Geometry:
     def apply_color(self):
         glColor4f(self.color[0], self.color[1], self.color[2],self.color[3])
 
-    def render(self):
+    def is_face_visible(self, face_normal, camera_direction):
+        dot_product = np.dot(face_normal, camera_direction)
+        return dot_product <= 0 
+
+    def render(self,camera_direction):
         pass
