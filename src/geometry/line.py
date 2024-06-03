@@ -11,6 +11,8 @@ class Line(Geometry):
         self.p2 = destination
 
     def render(self, camera_position):
+        self.apply_transformations()
+        self.apply_color()
         glBegin(GL_LINES)
         glVertex3f(self.p1[0], self.p1[1], self.p1[2])
         glVertex3f(self.p2[0], self.p2[1], self.p2[2])

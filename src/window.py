@@ -18,6 +18,8 @@ class Window:
         glClearColor(0.0, 0.0, 0.0, 0.0)
         glClearDepth(1.0)
         glEnable(GL_DEPTH_TEST)
+        glEnable(GL_COLOR_MATERIAL)
+        glColorMaterial(GL_FRONT_AND_BACK , GL_AMBIENT_AND_DIFFUSE)
         glDepthFunc(GL_LEQUAL)
         glMatrixMode(GL_PROJECTION)
         gluPerspective(45.0, float(self.width) / float(self.height), 0.1, 100.0)

@@ -45,8 +45,8 @@ class Cube(Geometry):
     def render(self,camera_pos):
         glPushMatrix()
         self.apply_transformations()
-        
         glBegin(GL_QUADS)
+        self.apply_color()
         for i, surface in enumerate(self.surfaces):
             normal = self.normals[i]
             glNormal3fv(normal)
