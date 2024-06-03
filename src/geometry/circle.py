@@ -19,6 +19,18 @@ class Circle(Geometry):
             z = self.position[2]
             self.vertices.append((x, y, z))
 
+    def change_position(self, position):
+        self.position = position
+        # recalculate vertices
+        self.vertices = []
+        for i in range(self.segments + 1):
+            theta = 2 * math.pi * i / self.segments
+            x = self.position[0] + self.radius * math.cos(theta)
+            y = self.position[1] + self.radius * math.sin(theta)
+            z = self.position[2]
+            self.vertices.append((x, y, z))
+        return super().change_position(position)
+
     def render(self, camera_direction):        
         glPushMatrix()
         self.apply_transformations()

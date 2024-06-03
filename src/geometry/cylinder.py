@@ -31,6 +31,12 @@ class Cylinder(Geometry):
         self.top_circle.set_color(r, g, b, a)
         self.bottom_circle.set_color(r, g, b, a)
         return super().set_color(r, g, b, a)
+    
+    def change_position(self, position):
+        self.position = position
+        self.bottom_circle.change_position(position)
+        self.top_circle.change_position((position[0], position[1], position[2] + self.height))
+        return super().change_position(position)
 
 
     def render(self, camera_pos):

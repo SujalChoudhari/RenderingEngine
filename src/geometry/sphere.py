@@ -11,6 +11,11 @@ class Sphere(Geometry):
         self.stacks = stacks
         self.generate_vertices()
 
+    def change_position(self, position):
+        self.position = position
+        self.generate_vertices()
+        return super().change_position(position)
+
     def generate_vertices(self):
         self.vertices = []
         self.normals = []

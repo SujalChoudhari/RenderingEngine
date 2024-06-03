@@ -21,6 +21,9 @@ class Geometry:
     def set_color(self, r, g, b, a=1.0):
         self.color = np.array([r, g, b, a])
 
+    def change_position(self, position):
+        ...
+
     def apply_transformations(self):
         glTranslatef(*self.translation)
         glRotatef(self.rotation[0], 1, 0, 0)

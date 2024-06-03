@@ -10,6 +10,10 @@ class Line(Geometry):
         self.p1 = origin
         self.p2 = destination
 
+    def change_position(self, position):
+        self.p1 = position
+        return super().change_position(position)
+
     def render(self, camera_position):
         self.apply_transformations()
         self.apply_color()

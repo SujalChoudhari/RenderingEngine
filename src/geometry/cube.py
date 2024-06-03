@@ -42,6 +42,20 @@ class Cube(Geometry):
             (1, 0, 0)    # Right face
         ]
 
+    def change_position(self, position):
+        self.position = position
+        # recalculate vertices
+        self.vertices = [
+            (position[0], position[1], position[2]),
+            (position[0] + self.size[0], position[1], position[2]),
+            (position[0] + self.size[0], position[1] + self.size[1], position[2]),
+            (position[0], position[1] + self.size[1], position[2]),
+            (position[0], position[1], position[2] + self.size[2]),
+            (position[0] + self.size[0], position[1], position[2] + self.size[2]),
+            (position[0] + self.size[0], position[1] + self.size[1], position[2] + self.size[2]),
+            (position[0], position[1] + self.size[1], position[2] + self.size[2]),
+        ]
+
     def render(self,camera_pos):
         glPushMatrix()
         self.apply_transformations()
