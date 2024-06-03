@@ -7,8 +7,8 @@ from src.renderer import Renderer
 from src.maths.vector import Vec3
 from src.geometry.line import Line
 from src.geometry.cube import Cube
+from src.geometry.light import Light
 from src.free_camera import FreeCamera
-from src.light import Light  # Import LightGeometry
 
 
 def main():
