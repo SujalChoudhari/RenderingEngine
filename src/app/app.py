@@ -12,9 +12,9 @@ from src.renderer import Renderer
 
 
 class Application:
-    def __init__(self):
+    def __init__(self, width=800, height=600, title="Rendering Engine"):
         pygame.init()
-        self.window = Window(800, 600, "Hello World")
+        self.window = Window(width=width, height=height, title=title)
         self.renderer = Renderer()
         self.clock = pygame.time.Clock()
         self.camera = FreeCamera([0, 0, 3], [0, 0, -1], [0, 1, 0])

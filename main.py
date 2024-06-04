@@ -1,22 +1,9 @@
-import pygame
-from OpenGL.GL import *
-from OpenGL.GLU import *
-import numpy as np
-import imgui
-from imgui.integrations.pygame import PygameRenderer
-from src.window import Window
-from src.renderer import Renderer
-from src.geometry.line import Line
-from src.geometry.cube import Cube
-from src.geometry.sphere import Sphere
-from src.geometry.cylinder import Cylinder
-from src.geometry.light import Light
 from src.app.app import Application
 
 
 def main():
     objects = {
-        "line": {"type": "line", "origin": (0, 0, 0), "destination": (1, 1, 1)},
+        "line": {"type": "line", "origin": (-5, 2, 0), "destination": (-3, 1,0)},
         "cube": {"type": "cube", "position": (0, 0, 0), "size": (1, 1, 1)},
         "light": {
             "type": "light",
@@ -25,8 +12,23 @@ def main():
             "diffuse": (1, 1, 1),
             "specular": (0.1, 0.1, 0.1),
         },
+        "sphere": {
+            "type": "sphere",
+            "position": (0, 5, -1),
+            "radius": 1,
+            "slices": 15,
+            "stacks": 15,
+        },
+        "cylinder": {
+            "type": "cylinder",
+            "position": (-10, 5, -1),
+            "radius": 1,
+            "height": 5,
+            "sides": 15,
+        }
+
     }
-    app = Application()
+    app = Application(width=1000, height=800, title="Rendering Engine")
     app.initialize_objects(objects)
     app.run()
 

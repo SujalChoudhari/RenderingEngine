@@ -51,6 +51,38 @@ class Geometry:
     def is_face_visible(self, face_normal, camera_direction, buffer=0.1):
         dot_product = np.dot(face_normal, camera_direction)
         return dot_product <= buffer
+    
+    def get_rotation_matrix(self):
+        angle = np.radians(self.rotation)
+        cos_a = np.cos(angle)
+        sin_a = np.sin(angle)
+
+        # Assuming rotation order is x, y, z
+        rx = np.array([
+            [1, 0, 0, 0],
+            [0, cos_a[0], -sin_a[0], 0],
+            [0, sin_a[0], cos_a[0], 0],
+            [0, 0, 0, 1]
+        ])
+
+        ry = np.array([
+            [cos_a[1], 0, sin_a[1], 0],
+            [0, 1, 0, 0],
+            [-sin_a[1], 0, cos_a[1], 0],
+            [0, 0, 0, 1]
+        ])
+
+        rz = np.array([
+            [cos_a[2], -sin_a[2], 0, 0],
+            [sin_a[2], cos_a[2], 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ])
+
+        rotation_matrix = np.dot(np.dot(rz, ry), rx)
+        return rotation_matrix
 
     def render(self, camera_direction):
         ...
+
+    
