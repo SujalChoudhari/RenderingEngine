@@ -27,6 +27,16 @@ class Cylinder(Geometry):
 
         self.normals = [(0, 0, -1), (0, 0, 1)]  # Normals for bottom and top faces
 
+    @property
+    def num_segments(self):
+        return self.sides
+    
+    @num_segments.setter
+    def num_segments(self, value):
+        self.sides = value
+        self.bottom_circle.num_segments = value
+        self.top_circle.num_segments = value
+
     def change_color(self, r, g, b, a=1.0):
         self.top_circle.change_color(r, g, b, a)
         self.bottom_circle.change_color(r, g, b, a)

@@ -6,6 +6,7 @@ from src.geometry.cube import Cube
 from src.geometry.sphere import Sphere
 from src.geometry.cylinder import Cylinder
 from src.geometry.light import Light
+from src.geometry.curve import Curve, BezierCurve, BSplineCurve
 
 
 class ImGuiHandler:
@@ -40,6 +41,24 @@ class ImGuiHandler:
                 )
                 cylinder.change_color(*obj.get("color", (1, 1, 1, 1)))
                 self.objects.append(cylinder)
+            elif obj["type"] == "curve":
+                curve = Curve(
+                    control_points=obj["control_points"],
+                )
+                self.objects.append(curve)
+            elif obj["type"] == "bezier_curve":
+                curve = BezierCurve(
+                    control_points=obj["control_points"],
+                    num_segments=obj.get("num_segments", 100),
+                )
+                self.objects.append(curve)
+            elif obj["type"] == "bspline_curve":
+                curve = BSplineCurve(
+                    control_points=obj["control_points"],
+                    degree=obj.get("degree", 3),
+                    num_segments=obj.get("num_segments", 100),
+                )
+                self.objects.append(curve)
             elif obj["type"] == "light":
                 light = Light(
                     position=obj["position"],
@@ -63,6 +82,20 @@ class ImGuiHandler:
                     obj.change_position(
                         new_position[0], new_position[1], new_position[2]
                     )
+
+                if hasattr(obj,"control_points"):
+                    list_vertices = obj.control_points
+                    for i, vertex in enumerate(list_vertices):
+                        changed, new_vertex = imgui.input_float3(f"Points {i+1}", *vertex)
+                        if changed:
+                            list_vertices[i] = new_vertex
+                    obj.control_points = list_vertices
+
+                if hasattr(obj, "num_segments"):
+                    num_segments = obj.num_segments
+                    changed, new_num_segments = imgui.input_int("Number of Segments", num_segments)
+                    if changed:
+                        obj.num_segments = new_num_segments
 
                 if hasattr(obj, "color") and type(obj) is not Light:
                     color = list(obj.color)

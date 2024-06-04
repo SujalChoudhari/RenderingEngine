@@ -3,12 +3,12 @@ from src.app.app import Application
 
 def main():
     objects = {
-        "line": {"type": "line", "origin": (-5, 2, 0), "destination": (-3, 1,0)},
+        "line": {"type": "line", "origin": (-5, 2, 0), "destination": (-3, 1, 0)},
         "cube": {"type": "cube", "position": (0, 0, 0), "size": (1, 1, 1)},
         "light": {
             "type": "light",
             "position": (-10, 10, 10),
-            "ambient": (.4, .4, .3),
+            "ambient": (0.4, 0.4, 0.3),
             "diffuse": (1, 1, 1),
             "specular": (0.1, 0.1, 0.1),
         },
@@ -25,8 +25,15 @@ def main():
             "radius": 1,
             "height": 5,
             "sides": 15,
-        }
-
+        },
+        "curve": {
+            "type": "curve",
+            "control_points": [
+                [-5, -5, -5],
+                [1, 4, 4],
+                [-10, -10, 10],
+            ],
+        },
     }
     app = Application(width=1000, height=800, title="Rendering Engine")
     app.initialize_objects(objects)
