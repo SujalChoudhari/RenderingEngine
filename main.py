@@ -1,42 +1,12 @@
 from src.app.app import Application
-
+from src.scene import Scene
 
 def main():
-    objects = {
-        "line": {"type": "line", "origin": (-5, 2, 0), "destination": (-3, 1, 0)},
-        "cube": {"type": "cube", "position": (0, 0, 0), "size": (1, 1, 1)},
-        "light": {
-            "type": "light",
-            "position": (-10, 10, 10),
-            "ambient": (0.4, 0.4, 0.3),
-            "diffuse": (1, 1, 1),
-            "specular": (0.1, 0.1, 0.1),
-        },
-        "sphere": {
-            "type": "sphere",
-            "position": (0, 5, -1),
-            "radius": 1,
-            "slices": 15,
-            "stacks": 15,
-        },
-        "cylinder": {
-            "type": "cylinder",
-            "position": (-10, 5, -1),
-            "radius": 1,
-            "height": 5,
-            "sides": 15,
-        },
-        "curve": {
-            "type": "curve",
-            "control_points": [
-                [-5, -5, -5],
-                [1, 4, 4],
-                [-10, -10, 10],
-            ],
-        },
-    }
     app = Application(width=1000, height=800, title="Rendering Engine")
-    app.initialize_objects(objects)
+    
+    scene = Scene(app, "./assets/scene1.mini")
+    app.add_scene(scene)
+    app.load_scene(scene.sceneID)
     app.run()
 
 

@@ -12,7 +12,13 @@ from src.renderer import Renderer
 
 
 class Application:
-    def __init__(self, width=800, height=600, title="Rendering Engine"):
+    def __init__(
+        self,
+        width=800,
+        height=600,
+        title="Rendering Engine",
+        update_callback=None,
+    ):
         pygame.init()
         self.window = Window(width=width, height=height, title=title)
         self.renderer = Renderer()
@@ -21,10 +27,20 @@ class Application:
         pygame.mouse.set_visible(False)
         pygame.event.set_grab(True)
         self.mouse_locked = True
+        self.scenes = []
+        self.update_callback = update_callback
 
-    def initialize_objects(self, objects):
+    def add_scene(self, scene):
+        self.scenes.append(scene)
+        scene.sceneID = len(self.scenes) - 1
+
+    def load_scene(self, sceneID):
+        scene = self.scenes[sceneID]
+        self.renderer = Renderer()
+        self.window.clear()
+        self.window.update()
         self.renderer.set_camera(self.camera)
-        self.imgui_handler = ImGuiHandler(self.window, self.renderer, objects)
+        self.imgui_handler = ImGuiHandler(self.window, self.renderer, scene.objects)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -65,6 +81,8 @@ class Application:
             self.window.clear()
             self.handle_events()
             self.process_input()
+            if self.update_callback:
+                self.update_callback()
             glLoadIdentity()
             self.camera.get_view_matrix()
             self.renderer.render()
