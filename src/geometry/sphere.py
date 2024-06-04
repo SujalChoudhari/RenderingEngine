@@ -4,17 +4,12 @@ from src.geometry.geometry import Geometry
 
 class Sphere(Geometry):
     def __init__(self, position, radius, update=None, slices=15, stacks=15):
-        super().__init__(update)
-        self.position = position
+        super().__init__(position=position,update_callback=update)
         self.radius = radius
         self.slices = slices
         self.stacks = stacks
         self.generate_vertices()
 
-    def change_position(self, position):
-        self.position = position
-        self.generate_vertices()
-        return super().change_position(position)
 
     def generate_vertices(self):
         self.vertices = []
@@ -33,9 +28,9 @@ class Sphere(Geometry):
                 sin_theta = math.sin(theta)
                 cos_theta = math.cos(theta)
 
-                x = self.position[0] + self.radius * sin_phi * cos_theta
-                y = self.position[1] + self.radius * sin_phi * sin_theta
-                z = self.position[2] + self.radius * cos_phi
+                x = 0 + self.radius * sin_phi * cos_theta
+                y = 0 + self.radius * sin_phi * sin_theta
+                z = 0 + self.radius * cos_phi
 
                 self.vertices.append((x, y, z))
                 self.normals.append((sin_phi * cos_theta, sin_phi * sin_theta, cos_phi))
@@ -52,7 +47,7 @@ class Sphere(Geometry):
                 normal1 = self.normals[index1]
                 normal2 = self.normals[index2]
                 
-                if not self.is_face_visible(normal1, camera_position):
+                if not self.is_face_visible(normal1, camera_position) or not self.is_face_visible(normal2, camera_position):
                     continue
 
                 glBegin(GL_QUADS)

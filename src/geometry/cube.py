@@ -1,21 +1,20 @@
 from OpenGL.GL import *
-
 from src.geometry.geometry import Geometry
+import numpy as np
 
 class Cube(Geometry):
     def __init__(self, position, size, update=None):
-        super().__init__(update)
-        self.position = position
+        super().__init__(position=position, update_callback=update)
         self.size = size
         self.vertices = [
-            (position[0], position[1], position[2]),
-            (position[0] + size[0], position[1], position[2]),
-            (position[0] + size[0], position[1] + size[1], position[2]),
-            (position[0], position[1] + size[1], position[2]),
-            (position[0], position[1], position[2] + size[2]),
-            (position[0] + size[0], position[1], position[2] + size[2]),
-            (position[0] + size[0], position[1] + size[1], position[2] + size[2]),
-            (position[0], position[1] + size[1], position[2] + size[2]),
+            (0, 0, 0),
+            (size[0], 0, 0),
+            (size[0], size[1], 0),
+            (0, size[1], 0),
+            (0, 0, size[2]),
+            (size[0], 0, size[2]),
+            (size[0], size[1], size[2]),
+            (0, size[1], size[2]),
         ]
 
         self.edges = [
@@ -42,25 +41,50 @@ class Cube(Geometry):
             (1, 0, 0)    # Right face
         ]
 
-    def change_position(self, position):
-        self.position = position
-        # recalculate vertices
-        self.vertices = [
-            (position[0], position[1], position[2]),
-            (position[0] + self.size[0], position[1], position[2]),
-            (position[0] + self.size[0], position[1] + self.size[1], position[2]),
-            (position[0], position[1] + self.size[1], position[2]),
-            (position[0], position[1], position[2] + self.size[2]),
-            (position[0] + self.size[0], position[1], position[2] + self.size[2]),
-            (position[0] + self.size[0], position[1] + self.size[1], position[2] + self.size[2]),
-            (position[0], position[1] + self.size[1], position[2] + self.size[2]),
-        ]
+        self._original_normals = list(self.normals)
 
-    def render(self,camera_pos):
+    def recalculate_normals(self):
+        rotation_matrix = self.get_rotation_matrix()
+        for i, normal in enumerate(self._original_normals):
+            normal = np.dot(rotation_matrix, np.array(normal + (0,)))[:3]  # Apply rotation
+            normal = normal / np.linalg.norm(normal)  # Normalize the normal
+            self.normals[i] = tuple(normal)
+
+    def get_rotation_matrix(self):
+        angle = np.radians(self.rotation)
+        cos_a = np.cos(angle)
+        sin_a = np.sin(angle)
+
+        # Assuming rotation order is x, y, z
+        rx = np.array([
+            [1, 0, 0, 0],
+            [0, cos_a[0], -sin_a[0], 0],
+            [0, sin_a[0], cos_a[0], 0],
+            [0, 0, 0, 1]
+        ])
+
+        ry = np.array([
+            [cos_a[1], 0, sin_a[1], 0],
+            [0, 1, 0, 0],
+            [-sin_a[1], 0, cos_a[1], 0],
+            [0, 0, 0, 1]
+        ])
+
+        rz = np.array([
+            [cos_a[2], -sin_a[2], 0, 0],
+            [sin_a[2], cos_a[2], 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ])
+
+        rotation_matrix = np.dot(np.dot(rz, ry), rx)
+        return rotation_matrix
+
+    def render(self, camera_pos):
         glPushMatrix()
         self.apply_transformations()
-        glBegin(GL_QUADS)
         self.apply_color()
+        glBegin(GL_QUADS)
         for i, surface in enumerate(self.surfaces):
             normal = self.normals[i]
             glNormal3fv(normal)
@@ -70,5 +94,4 @@ class Cube(Geometry):
                 v = self.vertices[vertex]
                 glVertex3fv(v)
         glEnd()
-        
         glPopMatrix()

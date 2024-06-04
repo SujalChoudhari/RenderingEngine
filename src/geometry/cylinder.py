@@ -7,7 +7,6 @@ from src.geometry.circle import Circle
 class Cylinder(Geometry):
     def __init__(self, position, radius, height, sides=20, update=None):
         super().__init__(update)
-        self.position = position
         self.radius = radius
         self.height = height
         self.sides = sides
@@ -27,10 +26,10 @@ class Cylinder(Geometry):
 
         self.normals = [(0, 0, -1), (0, 0, 1)]  # Normals for bottom and top faces
 
-    def set_color(self, r, g, b, a=1.0):
-        self.top_circle.set_color(r, g, b, a)
-        self.bottom_circle.set_color(r, g, b, a)
-        return super().set_color(r, g, b, a)
+    def change_color(self, r, g, b, a=1.0):
+        self.top_circle.change_color(r, g, b, a)
+        self.bottom_circle.change_color(r, g, b, a)
+        return super().change_color(r, g, b, a)
     
     def change_position(self, position):
         self.position = position

@@ -6,13 +6,9 @@ from src.geometry.geometry import Geometry
 
 class Line(Geometry):
     def __init__(self, origin, destination, update=None):
-        super().__init__(update)
+        super().__init__(position=[0,0,0],update_callback=update)
         self.p1 = origin
         self.p2 = destination
-
-    def change_position(self, position):
-        self.p1 = position
-        return super().change_position(position)
 
     def render(self, camera_position):
         self.apply_transformations()
