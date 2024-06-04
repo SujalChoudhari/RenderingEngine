@@ -83,19 +83,32 @@ class ImGuiHandler:
                         new_position[0], new_position[1], new_position[2]
                     )
 
-                if hasattr(obj,"control_points"):
+                if hasattr(obj, "control_points"):
                     list_vertices = obj.control_points
                     for i, vertex in enumerate(list_vertices):
-                        changed, new_vertex = imgui.input_float3(f"Points {i+1}", *vertex)
+                        changed, new_vertex = imgui.input_float3(
+                            f"Points {i+1}", *vertex
+                        )
                         if changed:
                             list_vertices[i] = new_vertex
                     obj.control_points = list_vertices
 
                 if hasattr(obj, "num_segments"):
                     num_segments = obj.num_segments
-                    changed, new_num_segments = imgui.input_int("Number of Segments", num_segments)
+                    changed, new_num_segments = imgui.input_int(
+                        "Number of Segments", num_segments
+                    )
                     if changed:
                         obj.num_segments = new_num_segments
+
+                if type(obj) is Sphere:
+                    slices, stacks = obj.slices, obj.stacks
+                    changed1, new_slices = imgui.input_int("Slices", slices)
+                    changed2, new_stacks = imgui.input_int("Stacks", stacks)
+                    if changed1:
+                        obj.slices = new_slices
+                    if changed2:
+                        obj.stacks = new_stacks
 
                 if hasattr(obj, "color") and type(obj) is not Light:
                     color = list(obj.color)

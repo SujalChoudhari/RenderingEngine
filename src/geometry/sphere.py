@@ -6,24 +6,41 @@ class Sphere(Geometry):
     def __init__(self, position, radius, update=None, slices=15, stacks=15):
         super().__init__(position=position,update_callback=update)
         self.radius = radius
-        self.slices = slices
-        self.stacks = stacks
+        self._slices = slices
+        self._stacks = stacks
         self.generate_vertices()
 
+    @property
+    def slices(self):
+        return self._slices
+    
+    @slices.setter
+    def slices(self, value):
+        self._slices = value
+        self.generate_vertices()
+
+    @property
+    def stacks(self):
+        return self._stacks
+    
+    @stacks.setter
+    def stacks(self, value):
+        self._stacks = value
+        self.generate_vertices()
 
     def generate_vertices(self):
         self.vertices = []
         self.normals = []
         
-        phi_step = math.pi / self.stacks
-        theta_step = 2 * math.pi / self.slices
+        phi_step = math.pi / self._stacks
+        theta_step = 2 * math.pi / self._slices
 
-        for i in range(self.stacks + 1):
+        for i in range(self._stacks + 1):
             phi = i * phi_step
             sin_phi = math.sin(phi)
             cos_phi = math.cos(phi)
 
-            for j in range(self.slices + 1):
+            for j in range(self._slices + 1):
                 theta = j * theta_step
                 sin_theta = math.sin(theta)
                 cos_theta = math.cos(theta)
@@ -39,10 +56,10 @@ class Sphere(Geometry):
         glPushMatrix()
         self.apply_transformations()
 
-        for i in range(self.stacks):
-            for j in range(self.slices):
-                index1 = i * (self.slices + 1) + j
-                index2 = index1 + self.slices + 1
+        for i in range(self._stacks):
+            for j in range(self._slices):
+                index1 = i * (self._slices + 1) + j
+                index2 = index1 + self._slices + 1
 
                 normal1 = self.normals[index1]
                 normal2 = self.normals[index2]
