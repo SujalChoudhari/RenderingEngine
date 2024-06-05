@@ -5,6 +5,8 @@ The purpose of this rendering engine is to showcase various rendering algorithms
 
 ![Renderer Screenshot](./assets/image1.png)
 
+![Animating Objects](./assets/image2.png)
+
 ### Features
 1. **OpenGL and Pygame Integration:** The engine utilizes Python's Pygame library for window management and OpenGL for rendering. This combination offers simplicity for beginners to get started with graphics programming.
   
