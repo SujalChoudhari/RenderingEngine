@@ -86,6 +86,7 @@ class Application:
                 self.update_callback()
             glLoadIdentity()
             self.camera.get_view_matrix()
+            self.renderer.update(self.clock.get_time() / 1000.0)
             self.renderer.render()
             self.imgui_handler.render_ui()
             self.window.update()

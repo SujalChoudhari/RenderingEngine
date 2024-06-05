@@ -24,6 +24,80 @@
                 1,
                 1,
                 1
+            ],
+            "keyframes": [
+                {
+                    "position": [
+                        0,
+                        -3,
+                        4
+                    ],
+                    "rotation": [
+                        0,
+                        45,
+                        0
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "position": [
+                        10,
+                        1,
+                        0
+                    ],
+                    "rotation": [
+                        45,
+                        0,
+                        0
+                    ],
+                    "color": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "position": [
+                        0,
+                        2,
+                        -10
+                    ],
+                    "rotation": [
+                        0,
+                        45,
+                        14
+                    ],
+                    "color": [
+                        0,
+                        1,
+                        0,
+                        1
+                    ]
+                },
+                {
+                    "position": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "color": [
+                        1,
+                        0,
+                        0,
+                        1
+                    ]
+                }
             ]
         },
         "light": {
@@ -58,7 +132,39 @@
             ],
             "radius": 1,
             "slices": 15,
-            "stacks": 15
+            "stacks": 15,
+            "color": [
+                0,
+                1,
+                0.5,
+                1
+            ],
+            "keyframes": [
+                {
+                    "color": [
+                        0,
+                        0.3,
+                        0.5,
+                        1
+                    ]
+                },
+                {
+                    "color": [
+                        0.5,
+                        0.5,
+                        0,
+                        1
+                    ]
+                },
+                {
+                    "color": [
+                        0,
+                        0.5,
+                        0.5,
+                        1
+                    ]
+                }
+            ]
         },
         "cylinder": {
             "type": "cylinder",
@@ -69,7 +175,20 @@
             ],
             "radius": 1,
             "height": 5,
-            "sides": 15
+            "sides": 15,
+            "color": [
+                0.5,
+                0.5,
+                1,
+                1
+            ],"keyframes":[
+                {"rotation":[0,45,0]},
+                {"rotation":[45,0,0]},
+                {"rotation":[0,45,0]},
+                {"rotation":[0,0,0]},
+                {"rotation":[0,45,45]},
+                {"rotation":[45,45,0]}
+            ]
         },
         "curve": {
             "type": "curve",

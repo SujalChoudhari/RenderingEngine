@@ -15,7 +15,7 @@ class Window:
         self.init_3d()
 
     def init_3d(self):
-        glClearColor(0.0, 0.0, 0.0, 0.0)
+        glClearColor(1.0, 1.0, 1.0, 1.0)
         glClearDepth(1.0)
         glEnable(GL_DEPTH_TEST)
         glEnable(GL_COLOR_MATERIAL)

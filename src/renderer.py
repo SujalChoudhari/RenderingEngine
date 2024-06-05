@@ -16,6 +16,10 @@ class Renderer:
         else:
             self.objects.append(obj)
 
+    def update(self,delta_time):
+        for obj in self.objects:
+            obj.update(delta_time)
+
     def render(self):
         camera_direction = self.camera.get_direction()
         for light in self.lights:
@@ -24,7 +28,6 @@ class Renderer:
 
         for obj in self.objects:
             obj.apply_color()
-            obj.update()
             obj.render(camera_direction)
 
         for light in self.lights:

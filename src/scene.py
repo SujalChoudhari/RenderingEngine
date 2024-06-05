@@ -69,6 +69,7 @@ class Scene:
                 )
                 self.lights.append(light)
                 self.objects.append(light)  # Add light to objects list for UI rendering
-
+            if "keyframes" in obj:
+                self.objects[-1].keyframes = obj["keyframes"]
             self.app.renderer.add_object(self.objects[-1])
 
