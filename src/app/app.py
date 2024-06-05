@@ -35,12 +35,13 @@ class Application:
         scene.sceneID = len(self.scenes) - 1
 
     def load_scene(self, sceneID):
-        scene = self.scenes[sceneID]
-        self.renderer = Renderer()
         self.window.clear()
         self.window.update()
+        self.renderer = Renderer()
+        scene = self.scenes[sceneID]
+        scene.init()
         self.renderer.set_camera(self.camera)
-        self.imgui_handler = ImGuiHandler(self.window, self.renderer, scene.objects)
+        self.imgui_handler = ImGuiHandler(self.window, scene.objects)
 
     def handle_events(self):
         for event in pygame.event.get():

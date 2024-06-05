@@ -18,7 +18,6 @@ class Renderer:
 
     def render(self):
         camera_direction = self.camera.get_direction()
-
         for light in self.lights:
             light.apply_color()
             light.render(camera_direction)
